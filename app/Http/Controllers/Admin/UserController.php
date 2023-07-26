@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -13,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return inertia('Admin/UsersIndex', [
+        return inertia('Admin/Users/UsersIndex', [
             'users' => User::all(),
         ]);
     }
@@ -47,15 +49,26 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return inertia('Admin/Users/UsersEdit', [
+            'user' => User::find($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
-        //
+        User::find($id)->update(
+            [
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'is_admin' => $request->input('is_admin'),
+            ]
+        );
+
+        return to_route('admin.users.index');
     }
 
     /**

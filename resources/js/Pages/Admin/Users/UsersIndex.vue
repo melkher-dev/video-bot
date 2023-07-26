@@ -23,11 +23,20 @@
                             <td>
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <button
-                                            class="btn btn-outline btn-primary btn-sm"
+                                        <a
+                                            :href="
+                                                route(
+                                                    'admin.users.edit',
+                                                    user.id
+                                                )
+                                            "
                                         >
-                                            Edit
-                                        </button>
+                                            <button
+                                                class="btn btn-outline btn-primary btn-sm"
+                                            >
+                                                Edit
+                                            </button>
+                                        </a>
                                     </div>
                                     <div>
                                         <button
@@ -69,10 +78,8 @@ const deleteUser = async (id) => {
         await axios.delete(route("admin.users.destroy", id));
         alert("User deleted successfully");
 
-        // Find the index of the deleted user in the newUsers array
         const index = newUsers.value.findIndex((user) => user.id === id);
         if (index !== -1) {
-            // Remove the user from the array using splice
             newUsers.value.splice(index, 1);
         }
     } catch (error) {
