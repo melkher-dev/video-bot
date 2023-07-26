@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Redirect;
 
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Admin/Users/UsersCreate');
     }
 
     /**
@@ -33,7 +34,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create(
+            [
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'is_admin' => $request->input('is_admin'),
+                'password' => Hash::make($request->input('password')),
+            ]
+        );
+
+        return to_route('admin.users.index');
     }
 
     /**

@@ -22,6 +22,12 @@
                             placeholder="Phone"
                             class="input input-bordered input-primary bg-white w-full my-2"
                         />
+                        <input
+                            v-model="form.password"
+                            type="password"
+                            placeholder="Password"
+                            class="input input-bordered input-primary bg-white w-full my-2"
+                        />
                         <div class="form-control">
                             <label class="label cursor-pointer">
                                 <span class="label-text text-gray-800"
@@ -38,10 +44,10 @@
                     </div>
                     <div class="card-actions justify-end">
                         <button
-                            @click="updateUser(form.id)"
+                            @click="storeUser"
                             class="btn btn-primary btn-outline btn-sm"
                         >
-                            Update
+                            Save
                         </button>
                     </div>
                 </div>
@@ -52,33 +58,19 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { router } from "@inertiajs/vue3";
-import { onMounted } from "vue";
 import { reactive } from "vue";
-
-const props = defineProps({
-    user: Object,
-});
+import { router } from "@inertiajs/vue3";
 
 const form = reactive({
-    id: "",
     name: "",
     email: "",
     phone: "",
+    password: "",
     is_admin: false,
 });
 
-onMounted(() => {
-    if (props.user) {
-        form.id = props.user.id;
-        form.name = props.user.name;
-        form.email = props.user.email;
-        form.phone = props.user.phone;
-        form.is_admin = props.user.is_admin;
-    }
-});
-const updateUser = (id) => {
-    router.put(route("admin.users.update", id), form);
+const storeUser = () => {
+    router.post(route("admin.users.store"), form);
 };
 </script>
 

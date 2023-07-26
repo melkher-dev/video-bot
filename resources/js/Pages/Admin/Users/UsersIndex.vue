@@ -1,5 +1,12 @@
 <template>
     <AuthenticatedLayout>
+        <div class="flex justify-center m-5">
+            <a :href="route('admin.users.create')">
+                <button class="btn btn-primary btn-outline btn-sm">
+                    Create new user
+                </button>
+            </a>
+        </div>
         <div class="flex justify-center">
             <div class="overflow-x-auto w-2/3 m-5">
                 <table class="table bg-white">
