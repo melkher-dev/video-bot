@@ -1,8 +1,11 @@
 <?php
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\BotController;
+use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 
@@ -16,6 +19,8 @@ use App\Http\Controllers\Admin\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', [BotController::class, 'updatedActivity']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
